@@ -43,7 +43,7 @@ class RFAPI(object):
         url_q = urllib.urlencode({"q":json.dumps(q)})
 
         try:
-			#Uncomment the attributes below and enter proxyhost information to use a proxy server
+	    #Uncomment the attributes below and enter proxyhost information to use a proxy server
             #proxy = urllib2.ProxyHandler({'http': <proxyhost:port>, 'https':<proxyhost:port>})
             #opener = urllib2.build_opener(proxy)
             #urllib2.install_opener(opener)
@@ -96,9 +96,9 @@ class RFAPI(object):
                 q[key]['page_start'] = res['next_page_start']
             elif 'source' in q:
                 q['source']['page_start'] = res['next_page_start']
-			elif 'cluster' in q:
-				q['cluster']['page_start'] = res['next_page_start']
-			elif 'entity' in q:
+	    elif 'cluster' in q:
+	        q['cluster']['page_start'] = res['next_page_start']
+	    elif 'entity' in q:
                 # Special handling for entity queries.
                 if len(res.get('entities', [])) == 0:
                     break
