@@ -1,0 +1,854 @@
+Item()
+  meta_type: MetaType
+  document_category: String
+  topics: set(Topic)
+  inherited_locations: set(GeoEntity)
+  authors: set(Entity)
+  positive: Double
+  negative: Double
+  general_positive: Double
+  general_negative: Double
+  violence: Double
+  sentiments: object
+  fragment_count: Long
+  read_users: set(User)
+  write_users: set(User)
+Entity(Item)
+  name: String
+  longname: String
+  description: String
+  any: Entity
+  alias: set(String)
+  hidden: Long
+  relevance: Long
+  level: Long
+  artificial_hits: Long
+  momentum: Double
+  hits: Long
+  external_links: object
+  disambiguation_vectors: object
+  lists: set(EntityList)
+  industries: set(Industry)
+  owner: Entity
+  category: set(Category)
+  contained: set(Entity)
+  related_to: set(Topic)
+  curated: Long
+  created: DateTime
+  modified: DateTime
+  related_links: set(URL)
+Event(Item)
+  start: DateTime
+  stop: DateTime
+  precision: String
+  event_fragment: String
+  event_text: String
+  time_fragment: String
+  time_text: String
+  tagged_fragment: String
+  language: String
+  document_source: Source
+  published: DateTime
+  downloaded: DateTime
+  analyzed: DateTime
+  indexed: DateTime
+  original_published: DateTime
+  echo: Long
+  document_id: String
+  document_original_id: String
+  document_external_id: String
+  document_url union(String,URL)
+  document_title: String
+  document_location: GeoEntity
+  document_position: Position
+  document_position_source: String
+  momentum: Double
+  hits: Long
+  function: String
+  canonic_id: String
+  binning_id: String
+  entities: set(Entity)
+  context_entities: set(Entity)
+  events: set(Event)
+  user_data: object
+  entities_momentum: object
+  inside_locations: set(GeoEntity)
+  event_positions: set(Position)
+  document_offset: Long
+ReportEntity(Entity)
+  owner: User
+  report_type: String
+  entities: set(Entity)
+  freetexts: set(String)
+  ip_addresses: set(String)
+  types: set(String)
+EntityList(ReportEntity)
+  content_type: String
+  length: Long
+EntityRelation(Entity)
+  entity: Entity
+  relation: Entity
+MetaType(Entity)
+  parent: MetaType
+Source(Entity)
+  topic: Topic
+  media_type: SourceMediaType
+  location: GeoEntity
+  organization: OrgEntity
+  parent: Source
+GeoEntity(Entity)
+  pos: Position
+  containers: set(GeoEntity)
+  features: set(union(Feature,EntityRelation))
+Feature(Entity)
+OrgEntity(Entity)
+  defunct_since: String
+  domicile: GeoEntity
+Category(Entity)
+Anniversary(Entity)
+City(GeoEntity)
+Commodity(Entity)
+Company(OrgEntity)
+  competitors: set(String)
+  officers: set(String)
+  addresses: set(String)
+  disambiguations: set(String)
+  tickers: set(String)
+  cik: set(String)
+  cusip: set(String)
+  sedol: set(String)
+  gics: set(String)
+  pages: set(String)
+  home_pages: set(String)
+Continent(GeoEntity)
+Country(GeoEntity)
+Currency(Entity)
+CurrencyPair(Entity)
+EconomicIndicator(Entity)
+EmailAddress(Entity)
+  domain: InternetDomainName
+PaymentCardNumber(Entity)
+  bin: BankIdentificationNumber
+BankIdentificationNumber(Entity)
+EntertainmentAwardEvent(Entity)
+Facility(GeoEntity)
+FaxNumber(Entity)
+Holiday(Entity)
+Identifier(Entity)
+  domain: Entity
+  entity: Entity
+MalwareSignature(Identifier)
+  exploits: set(CyberVulnerability)
+CyberVulnerability(Identifier)
+  metrics: object
+  affected_products: set(Product)
+ASNumber(Entity)
+  ranges: set(IpAddress)
+  details: object
+Industry(Entity)
+  sic_code: Long
+  gics_name: String
+IndustryTerm(Entity)
+InternetDomainName(Entity)
+  addresses: set(IpAddress)
+  domain: InternetDomainName
+  location: GeoEntity
+  source: Source
+IpAddress(Entity)
+Hash(Identifier)
+Hashtag(Entity)
+  entity: Entity
+Malware(Entity)
+MalwareCategory(Category)
+CyberThreatActorCategory(Category)
+CyberExploitTargetCategory(Category)
+AttackVector(Entity)
+MarketIndex(Entity)
+MedicalCondition(Entity)
+MedicalTreatment(Entity)
+Movie(Entity)
+MusicAlbum(Entity)
+MusicGroup(Entity)
+NaturalFeature(Entity)
+Operation(Entity)
+Product(Entity)
+  family: Product
+  company: Company
+  technologies: set(Technology)
+OperatingSystem(Product)
+Organization(OrgEntity)
+Username(Entity)
+  domain: Entity
+  created_at: DateTime
+Person(Entity)
+  position: set(union(Position,EntityRelation))
+  nationality: set(Country)
+  company: set(Company)
+  birth: String
+  death: String
+  gender: String
+PhoneNumber(Entity)
+Position(Entity)
+ProgrammingLanguage(Entity)
+ProvinceOrState(GeoEntity)
+PublishedMedium(Entity)
+RadioProgram(Entity)
+RadioStation(Entity)
+Religion(Entity)
+Region(GeoEntity)
+ReportingEntity(Entity)
+Sector(Industry)
+SportsEvent(Entity)
+SportsGame(Entity)
+SportsLeague(Entity)
+SourceMediaType(Entity)
+Topic(Entity)
+TVShow(Entity)
+TVStation(Entity)
+TechnologyArea(Entity)
+Technology(Entity)
+  area: TechnologyArea
+FileName(Entity)
+  operating_system union(Product,Technology)
+  file_type: FileType
+FileType(Entity)
+  parent: FileType
+FileNameExtension(FileType)
+WinRegKey(Entity)
+URL(Entity)
+  domain union(InternetDomainName,IpAddress)
+  resolved: URL
+IRCNetwork(Entity)
+User(Entity)
+  groups: set(User)
+EntityOccurrence(Event)
+  entity: Entity
+CoOccurrence(Event)
+StatusEvent(Event)
+  status: String
+DatedEvent(Event)
+  date: String
+  date_string: String
+StandardEvent(Event)
+  status: String
+  date: String
+  date_string: String
+Acquisition(StatusEvent)
+  company_acquirer: Company
+  company_being_acquired: Company
+Alliance(StatusEvent)
+  members: set(Company)
+AnalystEarningsEstimate(Event)
+  company_source: Company
+  person_source: Person
+  company_rated: Company
+  financial_metric: String
+  quarter: String
+  year: String
+AnalystRecommendation(Event)
+  company_source: Company
+  person_source: Person
+  company_rated: Company
+  financial_trend: String
+  rank_new: String
+  rank_old: String
+  price_new: String
+  price_old: String
+Arrest(DatedEvent)
+  person: Person
+  charges: set(String)
+ArmedAttack(StandardEvent)
+  parties: set(union(Person,Organization,Country))
+  attacker union(Person,Organization,Country)
+  attack_type: String
+  weapon_used: String
+  location union(String,GeoEntity)
+  casualties: String
+ArmsPurchaseSale(StandardEvent)
+  arms_desc: String
+  money_amount: String
+  arms_purchaser union(Country,Organization,Person)
+  arms_seller union(Country,Organization,Person,Company)
+Bankruptcy(StandardEvent)
+  company: Company
+BeneficialOwnershipFiling(Event)
+  acquirer union(Person,Company)
+  target: Company
+  date: String
+  shares: Long
+  percentage: Double
+  type: String
+  funding_source: String
+BonusSharesIssuance(StandardEvent)
+  company: Company
+  bonus_shares_ratio: String
+BusinessRelation(StandardEvent)
+  company1: Company
+  company2: Company
+  business_relation_type: String
+Buybacks(DatedEvent)
+  company: Company
+CandidatePosition(Event)
+  candidate: Person
+  position_past union(String,Position)
+  position_current union(String,Position)
+  position_aspirational union(String,Position)
+ClinicalTrial(StatusEvent)
+  lead_sponsor: OrgEntity
+  source: OrgEntity
+  collaborators: set(OrgEntity)
+  intervention_products: set(Product)
+  intervention_other: set(String)
+  phase: String
+  keywords: set(String)
+  authority: Organization
+  medical_conditions: set(MedicalCondition)
+  identifier: String
+  country: Country
+CompanyAccountingChange(StandardEvent)
+  company: Company
+  accounting_change_type: String
+CompanyAffiliates(Event)
+  company_affiliate: Company
+  company_parent: Company
+  affiliate_relation_type: String
+CompanyCompetitor(Event)
+  company: set(Company)
+CompanyCustomer(Event)
+  company_provider: Company
+  customer union(Company,Organization)
+CompanyEarningsAnnouncement(Event)
+  company: Company
+  quarter: String
+  year: String
+  financial_metric: String
+CompanyEarningsGuidance(Event)
+  company: Company
+  quarter: String
+  year: String
+  financial_trend: String
+  financial_metric: String
+CompanyEmployeesNumber(Event)
+  company: Company
+  employees_number: String
+  unit: String
+  location union(GeoEntity,String)
+CompanyExpansion(StandardEvent)
+  company: Company
+  expansion_type: String
+  location union(GeoEntity,String)
+  location_type: String
+CompanyForceMajeure(DatedEvent)
+  company: Company
+  forcemajeure: String
+  location union(GeoEntity,String)
+CompanyFounded(Event)
+  company: Company
+  year: String
+CompanyInvestment(StandardEvent)
+  company: Company
+  company_investor: Company
+CompanyLaborIssues(StandardEvent)
+  company: Company
+  location union(GeoEntity,String)
+CompanyLayoffs(StandardEvent)
+  company: Company
+  employees_number: String
+  employees_percentage: String
+CompanyLegalIssues(StandardEvent)
+  company_sued: Company
+  company_plaintiff: Company
+  person_plaintiff: Person
+  sued_description: String
+  lawsuit_class: String
+CompanyListingChange(DatedEvent)
+  company: Company
+  stock_exchange: String
+  change_type: String
+  ticker: String
+CompanyLocation(Event)
+  company: Company
+  company_location_type: String
+  city: City
+  country: Country
+  province_or_state: ProvinceOrState
+CompanyMeeting(StandardEvent)
+  company: Company
+  company_meeting_type: String
+  country: Country
+  city: City
+  province_or_state: ProvinceOrState
+  facility: Facility
+CompanyNameChange(StandardEvent)
+  company_former_name: Company
+  company_new_name: Company
+  ticker: String
+  stock_exchange: String
+CompanyProduct(Event)
+  company: Company
+  product: Product
+  product_type: String
+CompanyReorganization(StandardEvent)
+  company: Company
+CompanyRestatement(StandardEvent)
+  company: Company
+  year: String
+  quarter: String
+CompanyTechnology(Event)
+  company: Company
+  technology: Technology
+CompanyTicker(Event)
+  company: Company
+  ticker: String
+  stock_exchange: String
+CompanyUsingProduct(StandardEvent)
+  company_customer: Company
+  organization_customer: Organization
+  company_provider: Company
+  product: Product
+  product_type: String
+ConferenceCall(StatusEvent)
+  company: Company
+  conference_call_date: String
+  conference_call_type: String
+  quarter: String
+  year: String
+  state: String
+  title: String
+  executives: set(Person)
+  analysts: set(Person)
+  presentation: set(Quotation)
+  question_session: set(Quotation)
+  presentation_sentiment: Double
+  questions_sentiment: Double
+  answers_sentiment: Double
+Conviction(DatedEvent)
+  person: Person
+  charges: set(String)
+Coup(Event)
+  coup_indicator: String
+  location: GeoEntity
+  coup_target: String
+  removed_leader: Person
+CreditRating(Event)
+  company_source: Company
+  rated union(Company,Organization)
+  financial_trend: String
+  rank_new: String
+  rank_old: String
+CyberAttack(Event)
+  indicator: String
+  method union(Malware,AttackVector,MalwareCategory,MalwareSignature,IpAddress,CyberVulnerability)
+  operation: Operation
+  related_entities: set(Entity)
+  target: set(union(OrgEntity,GeoEntity,Product,Technology,Facility,Person,URL,InternetDomainName,IpAddress,Industry))
+  attacker union(IpAddress,Organization,GeoEntity,Person)
+  target_string: String
+  related_entities_string: String
+CyberExploit(Event)
+  vulnerability: CyberVulnerability
+  indicator: String
+  malware: set(union(Malware,MalwareCategory,AttackVector))
+  products: set(union(Product,Technology))
+DebtFinancing(StandardEvent)
+  company: Company
+  debt_type: String
+  debt_action: String
+DelayedFiling(StatusEvent)
+  company: Company
+  filing_type: String
+  year: String
+  quarter: String
+DiplomaticRelations(DatedEvent)
+  entity1 union(Country,Organization,Person)
+  entity2 union(Country,Organization,Person)
+  action: String
+  location union(GeoEntity,String)
+Dividend(StatusEvent)
+  company: Company
+  dividend_type: String
+  year: String
+  quarter: String
+EconomicEvent(Event)
+  type: String
+  country: Country
+EmploymentChange(DatedEvent)
+  company: Company
+  organization: Organization
+  person: Person
+  position: Position
+  change_type: String
+EmploymentRelation(StandardEvent)
+  person_employer: Person
+  person_employee: Person
+  position: Position
+EnvironmentalIssue(DatedEvent)
+  environmental_issue: String
+  location union(GeoEntity,String)
+EquityFinancing(StandardEvent)
+  company: Company
+  currency: Currency
+ExtendedPatentFiling(StandardEvent)
+  patent_id union(String,Identifier)
+  issuing_country: String
+  title: String
+  application_number: String
+  filing_date union(DateTime,String)
+  publication_date union(DateTime,String)
+  assignee union(Person,OrgEntity,Company,Organization)
+  primary_class: String
+  other_classes: set(String)
+  international_classes: set(String)
+  inventors: set(union(Person,OrgEntity,Company,Organization))
+  local_patent_references: set(String)
+  foreign_patent_references: set(String)
+  related_applications: set(String)
+  other_references: set(String)
+  related_technologies: set(Technology)
+  related_products: set(Product)
+Extinction(DatedEvent)
+  species: String
+  location union(GeoEntity,String)
+FamilyRelation(Event)
+  person: Person
+  person_relative: Person
+  family_relation_type: String
+FDAPhase(StatusEvent)
+  company: Company
+  product: Product
+  fda_stage: String
+  product_type: String
+FinancialFiling(Event)
+  type: String
+  company: Company
+  authority: Organization
+  period: String
+  items: set(String)
+IndicesChanges(DatedEvent)
+  index: String
+  company: Company
+  type: String
+Indictment(DatedEvent)
+  person: Person
+  charges: set(String)
+InsiderTransaction(Event)
+  insider union(Person,Company,Organization,ReportingEntity)
+  company: Company
+  role_is_director: String
+  role_is_officer: String
+  role_is_ten_percent_owner: String
+  role_is_other: String
+  role_officer_title: String
+  role_other: String
+  transaction_code: String
+  transaction_date: String
+  transaction_deemed_execution_date: String
+  transaction_quantity: String
+  transaction_price: String
+  transaction_action: String
+  holding_instrument: String
+  holding_size: String
+  holding_direct_or_indirect_ownership: String
+  holding_indirect_ownership_nature: String
+  derivative_exercice_price: String
+  derivative_exercice_date: String
+  derivative_expiration_date: String
+  derivative_underlying: String
+  derivative_contract_size: String
+IPO(StandardEvent)
+  company: Company
+JointVenture(StandardEvent)
+  members: set(Company)
+  joint_venture: Company
+ManMadeDisaster(DatedEvent)
+  manmade_disaster: String
+  location union(GeoEntity,String)
+  facility: Facility
+Merger(StandardEvent)
+  members: set(Company)
+MilitaryAction(StandardEvent)
+  military union(Country,Organization,Person)
+  action: String
+  purpose: String
+  location union(String,GeoEntity)
+MovieRelease(StandardEvent)
+  movie: Movie
+MusicAlbumRelease(StandardEvent)
+  music_album: MusicAlbum
+  person_performer: Person
+  musicgroup_performer: MusicGroup
+NaturalDisaster(DatedEvent)
+  natural_disaster: String
+  location union(GeoEntity,String)
+PatentFiling(StandardEvent)
+  company: Company
+  organization: Organization
+  patent_description: String
+PatentIssuance(DatedEvent)
+  company: Company
+  organization: Organization
+  patent_description: String
+  patent_number: String
+  status: String
+PersonAttributes(Event)
+  person: Person
+  age: String
+  birth_date: String
+  birth_place union(GeoEntity,String)
+  gender: String
+PersonCareer(StatusEvent)
+  person: Person
+  position: Position
+  company: Company
+  organization: Organization
+  city: City
+  province_or_state: ProvinceOrState
+  country: Country
+  career_type: String
+PersonCommunication(StandardEvent)
+  person1: Person
+  person_description1: String
+  person2: Person
+  person_description2: String
+  facility: Facility
+  organization_or_company union(Company,Organization)
+PersonEducation(Event)
+  person: Person
+  certification: String
+  degree: String
+  school_or_organization: String
+PersonEmailAddress(Event)
+  person: Person
+  email_address: EmailAddress
+PersonLocation(Event)
+  person: Person
+  person_group: String
+  location union(String,GeoEntity)
+PersonMeeting(Event)
+  meeting_indicator: String
+  person1: Person
+  person2: Person
+PersonRelation(DatedEvent)
+  person1: Person
+  person2: Person
+  person_relation_type: String
+PersonThreat(Event)
+  threat_indicator: String
+  threatened: Person
+  actor: Person
+PersonTravel(StandardEvent)
+  person: Person
+  location_origin union(GeoEntity,String)
+  location_destination union(GeoEntity,String)
+PersonParty(Event)
+  person: Person
+  party union(String,Organization)
+  party_description: String
+PressRelease(Event)
+  release_indicator: String
+  releaser union(Person,OrgEntity)
+PoliticalEndorsement(Event)
+  endorsee union(Person,Organization)
+  endorser union(Person,Organization)
+PoliticalEvent(Event)
+  date: String
+  type: String
+  location union(GeoEntity,String)
+  description: String
+PoliticalRelationship(Event)
+  political_entity1 union(Person,Organization)
+  political_entity2 union(Person,Organization)
+  political_relationship_type: String
+VotingResult(DatedEvent)
+  political_event: PoliticalEvent
+  location union(GeoEntity,String)
+  winner union(Person,Organization)
+  opponent union(Person,Organization)
+PollResult(VotingResult)
+  conductor union(Company,Organization)
+ProductIssues(StandardEvent)
+  product: Product
+  product_type: String
+  company: Company
+  organization_issuer: Organization
+ProductRecall(DatedEvent)
+  company_recalling: Company
+  company_distributor: Company
+  product: Product
+  product_type: String
+ProductRelease(StandardEvent)
+  company: Company
+  product: Product
+  product_type: String
+Quotation(Event)
+  person_quotation_indicator: String
+  person: Person
+  quote: String
+  quote_entities: set(Entity)
+  quote_events: set(Event)
+SecondaryIssuance(StandardEvent)
+  company: Company
+StockSplit(Event)
+  company: Company
+  stock_split_ratio: String
+Trial(DatedEvent)
+  person: Person
+  charges: set(String)
+CrimeAndViolence(DatedEvent)
+  persons: set(Person)
+  organizations: set(Organization)
+  location union(GeoEntity,String)
+TerrorCommunication(CrimeAndViolence)
+PoliceOperation(CrimeAndViolence)
+BiologicalTerrorism(CrimeAndViolence)
+Bombing(CrimeAndViolence)
+ArmedAssault(CrimeAndViolence)
+TerrorFinancing(CrimeAndViolence)
+Vandalism(CrimeAndViolence)
+MilitaryOperation(CrimeAndViolence)
+HostageTakingKidnapping(CrimeAndViolence)
+HostageRelease(CrimeAndViolence)
+CriminalCourtProceeding(CrimeAndViolence)
+Arson(CrimeAndViolence)
+Trafficking(CrimeAndViolence)
+Robbery(CrimeAndViolence)
+Ceasefire(CrimeAndViolence)
+ChemicalTerrorism(CrimeAndViolence)
+CivilCourtProceeding(CrimeAndViolence)
+Hijacking(CrimeAndViolence)
+Cyberterrorism(CrimeAndViolence)
+NuclearTerrorism(CrimeAndViolence)
+MiscTerrorism(CrimeAndViolence)
+TrafficAccident(Event)
+  location: GeoEntity
+  indicator: String
+  vehicle: String
+RFEVEIedExplosion(Event)
+  mmd: String
+  location: String
+  facility: String
+  victim: String
+  damage: String
+BusinessTransaction(StandardEvent)
+  transaction_indicator: String
+  organization: OrgEntity
+DiseaseOutbreak(Event)
+  disease: set(MedicalCondition)
+  disease_indicator: String
+  location: GeoEntity
+  facility: Facility
+  size: String
+RFEVEAcquisition(StatusEvent)
+  company_acquirer: OrgEntity
+  company_being_acquired: OrgEntity
+  acquisition_indicator: String
+Announcement(Event)
+  announcement_indicator: String
+  announcer union(Person,OrgEntity,GeoEntity)
+RFEVEArmedAssault(Event)
+  parties: set(union(Person,OrgEntity,GeoEntity))
+  target: set(union(Person,OrgEntity,GeoEntity))
+  attacker: set(union(Person,OrgEntity,GeoEntity))
+  weapon: String
+  method: String
+  location: set(GeoEntity)
+Election(Event)
+  election_indicator: String
+  location: GeoEntity
+RFEVELegislation(Event)
+  legislation_indicator: String
+  proponent_or_legislator union(Person,OrgEntity)
+  area: GeoEntity
+  category_string: String
+RFEVEMalwareThreat(Event)
+  malware_indicator: String
+  organization: OrgEntity
+  target union(OrgEntity,GeoEntity)
+  attacker union(OrgEntity,GeoEntity,Person)
+  guard_organization: OrgEntity
+RFEVEMerger(StandardEvent)
+  merger_indicator: String
+  company1: OrgEntity
+  company2: OrgEntity
+MilitaryManeuver(Event)
+  maneuver_indicator: String
+  location_string: String
+  actor_string: String
+  actors: set(union(GeoEntity,OrgEntity))
+  locations: set(GeoEntity)
+NuclearMaterialTransaction(Event)
+  transaction: String
+  material: String
+  location_destination: GeoEntity
+  location_origin: GeoEntity
+RadiologicalMaterialTransaction(Event)
+  transaction: String
+  material: String
+  location_destination: GeoEntity
+  location_origin: GeoEntity
+RFEVEOrganizationRelationship(Event)
+  partner1: OrgEntity
+  partner2: OrgEntity
+  relationship_indicator: String
+RFEVEPersonCareer(Event)
+  person: Person
+  position: Position
+  position_string: String
+  organization: OrgEntity
+  location: GeoEntity
+RFEVEPersonCommunication(Event)
+  communication_indicator: String
+  person1: Person
+  person2: Person
+RFEVEProtest(Event)
+  type: String
+  location union(GeoEntity,String)
+  protest_target union(Person,OrgEntity,Country)
+  protester: OrgEntity
+  organization: set(OrgEntity)
+RFEVEPoliticalRelationship(Event)
+  relationship_indicator: String
+  partner1: GeoEntity
+  partner2: GeoEntity
+Speech(Event)
+  speech_indicator: String
+  speaker: Person
+Visit(Event)
+  visit_indicator: String
+  visitor: Person
+  destination_string: String
+  destination_locations: set(GeoEntity)
+  destination_organizations: set(OrgEntity)
+MalwareAnalysis(Event)
+CredentialLeak(Event)
+  targets: set(Entity)
+  counts: object
+CreditCardLeak(Event)
+  targets: set(Entity)
+  counts: object
+MaliciousMention(Event)
+  iocs: set(Entity)
+  indicator: String
+ServiceDisruption(Event)
+  disruption_entities: set(union(Company,Organization,URL,InternetDomainName,Product))
+MnA(Event)
+  companies: set(Company)
+GeoPolitical(Event)
+  location: GeoEntity
+CoEntityText(Event)
+  entities: set(Entity)
+  word: String
+LocatedEvent(Event)
+  location: GeoEntity
+QuotationText(Event)
+  person: Person
+  quote_entities: set(Entity)
+  word: String
+  quote: String
+BusinessTransactionText(Event)
+  organization: OrgEntity
+  word: String
+SourceLocation(Event)
+  location: GeoEntity
+LocationEvent(Event)
+  location: GeoEntity
