@@ -1,6 +1,5 @@
-# api
-Code related to the Recorded Future API.
+# Recorded Future API
 
-See the [API documentation](https://github.com/recordedfuture/api/wiki/RecordedFutureAPI) for further details.
+This repo contains code related to the Recorded Future API.
 
-Work in progress as we migrate from https://code.google.com/p/recordedfuture/
+See the [API documentation](https://github.com/recordedfuture/api/wiki/RecordedFutureAPI) for further details and example usage.
