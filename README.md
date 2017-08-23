@@ -2,4 +2,4 @@
 
 This repo contains code related to the Recorded Future API.
 
-See the [API documentation](https://github.com/recordedfuture/api/wiki/RecordedFutureAPI) for further details and example usage.
+[API documentation](https://support.recordedfuture.com/hc/en-us) is now located on the Recorded Future Support portal.
